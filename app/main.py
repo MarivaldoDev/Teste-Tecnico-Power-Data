@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import people, films
+from app.routes import people, films, planets, starships
 
 app = FastAPI(
     title="Star Wars API",
@@ -8,9 +8,9 @@ app = FastAPI(
 )
 
 app.include_router(people.router, prefix="/people", tags=["People"])
-# app.include_router(planets.router, prefix="/planets", tags=["Planets"])
+app.include_router(planets.router, prefix="/planets", tags=["Planets"])
 app.include_router(films.router, prefix="/films", tags=["Films"])
-# app.include_router(starships.router, prefix="/starships", tags=["Starships"])
+app.include_router(starships.router, prefix="/starships", tags=["Starships"])
 
 
 @app.get("/")
