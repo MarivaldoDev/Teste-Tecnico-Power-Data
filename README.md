@@ -87,7 +87,7 @@ Após iniciar a aplicação, acesse:
 - `GET /people` - Lista todos os personagens
   - Query params: `name`, `gender`
 - `GET /people/{id}/films` - Retorna os filmes em que o personagem apareceu
-- `GET /people/{id}/homeworld` - Retorna o planeta natal do personagem
+- `GET /people/{id}/planet` - Retorna o planeta natal do personagem
 - `GET /people/{id}/starships` - Retorna as naves pilotadas pelo personagem
 
 #### 🎬 Films (Filmes)
