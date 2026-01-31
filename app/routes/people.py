@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Query, HTTPException
+from fastapi import APIRouter, Query, HTTPException, Depends
 from app.services.swapi_service import SwapiService
+from app.core.security import verify_api_key
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(verify_api_key)])
 
 
 @router.get("/")
@@ -30,18 +31,16 @@ def get_people(
 
 
 @router.get("/{person_id}/films")
-def get_person_films(person_id: int):
+def get_person_films(
+    person_id: int,
+    sort: str | None = Query(default=None, description="Campo para ordenação")
+):
     person = SwapiService.fetch_by_url(
         f"https://swapi.dev/api/people/{person_id}/"
     )
 
-    if not person:
-        raise HTTPException(status_code=404, detail="Character not found")
-
-    films_urls = person.get("films", [])
-
     films = []
-    for url in films_urls:
+    for url in person.get("films", []):
         film = SwapiService.fetch_by_url(url)
         films.append({
             "title": film["title"],
@@ -49,9 +48,11 @@ def get_person_films(person_id: int):
             "release_date": film["release_date"]
         })
 
+    if sort and sort in films[0]:
+        films.sort(key=lambda x: x[sort])
+
     return {
         "character": person["name"],
-        "films_count": len(films),
         "films": films
     }
 

@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from app.core.security import verify_api_key
 from app.services.swapi_service import SwapiService
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(verify_api_key)])
 
 
 @router.get("/{starship_id}/pilots")

@@ -4,7 +4,7 @@ from app.routes import people, films, planets, starships
 app = FastAPI(
     title="Star Wars API",
     description="API de consulta de dados do universo Star Wars",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 app.include_router(people.router, prefix="/people", tags=["People"])
