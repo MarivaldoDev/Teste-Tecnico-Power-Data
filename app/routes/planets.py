@@ -26,7 +26,6 @@ def get_planet_residents(
             "birth_year": person["birth_year"]
         })
 
-    # 🔍 FILTRO
     if gender:
         residents = [
             r for r in residents if r["gender"] == gender

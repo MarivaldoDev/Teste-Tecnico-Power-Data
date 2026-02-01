@@ -39,16 +39,20 @@ def get_person_films(
         f"https://swapi.dev/api/people/{person_id}/"
     )
 
+    if not person:
+        raise HTTPException(status_code=404, detail="Character not found")
+
     films = []
     for url in person.get("films", []):
         film = SwapiService.fetch_by_url(url)
-        films.append({
-            "title": film["title"],
-            "episode_id": film["episode_id"],
-            "release_date": film["release_date"]
-        })
+        if film:
+            films.append({
+                "title": film["title"],
+                "episode_id": film["episode_id"],
+                "release_date": film["release_date"]
+            })
 
-    if sort and sort in films[0]:
+    if sort and films and sort in films[0]:
         films.sort(key=lambda x: x[sort])
 
     return {
@@ -67,8 +71,10 @@ def get_person_planet(person_id: int):
         raise HTTPException(status_code=404, detail="Character not found")
 
     planet_url = person.get("homeworld")
-
     planet = SwapiService.fetch_by_url(planet_url)
+
+    if not planet:
+        raise HTTPException(status_code=404, detail="Planet not found")
 
     return {
         "character": person["name"],
@@ -94,11 +100,12 @@ def get_person_starships(person_id: int):
     starships = []
     for url in starships_urls:
         ship = SwapiService.fetch_by_url(url)
-        starships.append({
-            "name": ship["name"],
-            "model": ship["model"],
-            "manufacturer": ship["manufacturer"]
-        })
+        if ship:
+            starships.append({
+                "name": ship["name"],
+                "model": ship["model"],
+                "manufacturer": ship["manufacturer"]
+            })
 
     return {
         "character": person["name"],
