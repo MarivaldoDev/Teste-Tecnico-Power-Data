@@ -1,7 +1,8 @@
 from fastapi import Header, HTTPException, status
+from decouple import config 
 
-API_KEY = "powerofdata-key"
-
+API_KEY = config("API_KEY")
+    
 def verify_api_key(api_key: str = Header(...)):
     if api_key != API_KEY:
         raise HTTPException(

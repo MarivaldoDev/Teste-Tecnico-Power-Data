@@ -1,9 +1,9 @@
-import os
+from decouple import config
 import pytest
 from fastapi.testclient import TestClient
 from app.main import app
 
-API_KEY = os.getenv("API_KEY", "powerofdata-key")
+API_KEY = config("API_KEY")
 
 
 @pytest.fixture
