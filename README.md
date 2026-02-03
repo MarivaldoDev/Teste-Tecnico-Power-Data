@@ -151,3 +151,17 @@ Marivaldo
 ## 📄 Licença
 
 Este projeto foi desenvolvido como teste técnico para a Power Data.
+ 
+## ☁️ Deploy no GCP (Cloud Run)
+
+Recomendo usar **Cloud Run** para este projeto (suporta ASGI/FastAPI sem adaptação). Para facilitar o deploy incluí um `Dockerfile` e o script `deploy.sh`.
+
+Passos rápidos:
+
+```bash
+# Edite a variável PROJECT abaixo ou exporte antes de rodar:
+export PROJECT=your-gcp-project-id
+./deploy.sh
+```
+
+O script faz `gcloud builds submit` e deploya no Cloud Run. Se preferir Cloud Functions + API Gateway, eu posso adicionar um wrapper (Functions Framework) e o OpenAPI para o Gateway.

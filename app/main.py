@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from app.routes import people, films, planets, starships
@@ -22,4 +23,8 @@ templates = Jinja2Templates(directory="app/templates")
 
 @app.get("/")
 def health_check(request: Request):
-    return templates.TemplateResponse("health.html", {"request": request})
+    accept = request.headers.get("accept", "")
+    data = {"status": "ok"}
+    if "text/html" in accept:
+        return templates.TemplateResponse(request, "health.html", {"request": request})
+    return JSONResponse(content=data)
