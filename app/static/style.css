@@ -2,74 +2,102 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
 
 body {
+  background: radial-gradient(circle at top, #1c1f26, #0b0d12);
+  color: #eaeaea;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #020617);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #e5e7eb;
 }
 
 .container {
-  width: 100%;
-  max-width: 420px;
-  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 .card {
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(148, 163, 184, 0.15);
-  border-radius: 16px;
-  padding: 32px;
+  background: #11131a;
+  border-radius: 12px;
+  padding: 40px;
+  width: 420px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
 }
 
-.card h1 {
-  font-size: 1.8rem;
-  margin-bottom: 12px;
-  color: #22c55e; 
+.card.wide {
+  width: 520px;
 }
 
-.card p {
-  font-size: 0.95rem;
+h1 {
+  color: #ffe81f;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #b5b5b5;
+  margin-bottom: 25px;
+}
+
+.endpoints {
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.endpoints h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.endpoints ul {
+  list-style: none;
+}
+
+.endpoints li {
+  padding: 6px 0;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
   margin-bottom: 20px;
-  color: #cbd5f5;
 }
 
 .cta {
-  display: inline-block;
-  padding: 12px 22px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  color: #020617;
-  font-weight: 600;
+  background: #ffe81f;
+  color: #000;
+  padding: 10px 16px;
+  border-radius: 6px;
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  font-weight: bold;
 }
 
 .cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);
-  opacity: 0.95;
+  background: #fff27a;
 }
 
-.cta:active {
-  transform: translateY(0);
-  box-shadow: 0 5px 15px rgba(34, 197, 94, 0.25);
+.secondary {
+  border: 1px solid #ffe81f;
+  color: #ffe81f;
+  padding: 10px 16px;
+  border-radius: 6px;
+  text-decoration: none;
 }
 
-@media (max-width: 480px) {
-  .card {
-    padding: 24px;
-  }
-
-  .card h1 {
-    font-size: 1.5rem;
-  }
+.secondary:hover {
+  background: rgba(255, 232, 31, 0.1);
 }
+
+.footer {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.ok {
+  color: #2ecc71;
+  font-weight: bold;
+}
+

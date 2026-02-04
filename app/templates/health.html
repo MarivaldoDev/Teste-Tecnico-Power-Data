@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <title>Health Check</title>
-  <link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8" />
+  <title>Star Wars API</title>
+  <link rel="stylesheet" href="static/style.css" />
 </head>
 <body>
   <div class="container">
-    <div class="card">
-      <h1>Status: ok</h1>
-      <p>Ir para a documentação:</p>
-      <a class="cta" href="/docs">Documentação da API</a>
+    <div class="card wide">
+      <h1>🌌 Star Wars API</h1>
+      <p class="subtitle">
+        API para consulta de dados do universo Star Wars, utilizando a SWAPI.
+      </p>
+
+      <div class="endpoints">
+        <h2>📌 Endpoints disponíveis</h2>
+        <ul>
+          <li><strong>/people</strong> — Personagens</li>
+          <li><strong>/planets</strong> — Planetas</li>
+          <li><strong>/films</strong> — Filmes</li>
+          <li><strong>/starships</strong> — Naves</li>
+        </ul>
+      </div>
+
+      <div class="actions">
+        <a class="cta" href="/docs">📘 Documentação Swagger</a>
+      </div>
+
+      <p class="footer">
+        Status da API: <span class="ok">ONLINE</span>
+      </p>
     </div>
   </div>
 </body>
 </html>
+
