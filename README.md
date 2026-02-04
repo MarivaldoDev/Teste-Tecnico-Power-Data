@@ -114,6 +114,64 @@ Acesse a documentação interativa:
 http://localhost:8000/docs
 ```
 
+## Executando o Projeto com uv (opcional)
+
+O projeto também pode ser executado utilizando o uv, um gerenciador de dependências e ambientes virtualizados mais rápido que o pip, mantido pela Astral.
+
+Pré-requisitos
+
+- Python 3.11+
+- uv instalado
+
+Para instalar o uv:
+```bash
+pip install uv
+```
+
+### Criar e ativar o ambiente virtual
+
+```bash
+Linux
+uv venv
+source .venv/bin/activate
+
+Windows
+uv venv
+.venv\Scripts\activate
+```
+
+### Instalar as dependências
+```bash
+uv pip install -r requirements.txt
+```
+
+### Executar a aplicação
+```bash
+uv run uvicorn app.main:app --reload
+```
+
+### A aplicação ficará disponível em:
+```bash
+http://localhost:8000
+```
+
+### E a documentação interativa em:
+```bash
+http://localhost:8000/docs
+```
+
+### Executar os testes com uv
+```bash
+uv run pytest
+```
+
+### Gerar relatório de cobertura com uv
+```bash
+uv run coverage run -m pytest
+uv run coverage report
+uv run coverage html
+```
+
 ## ☁️ Deploy na Google Cloud Platform (GCP)
 
 A aplicação foi projetada para ser executada em ambiente serverless na GCP.
@@ -141,4 +199,4 @@ Foram evitadas soluções complexas ou overengineering, mantendo o escopo alinha
 
 ## 👨‍💻 Autor
 
-Desenvolvido por Marivaldo Pedro
+Desenvolvido por <a href="marivaldo.pedro.dev@outlook.com">Marivaldo Pedro</a>
