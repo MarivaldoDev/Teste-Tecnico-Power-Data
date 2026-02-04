@@ -3,8 +3,9 @@ from unittest.mock import Mock, patch
 from app.services.swapi_service import SwapiService
 
 
-def make_response(json_data):
+def make_response(json_data, status_code=200):
     mock = Mock()
+    mock.status_code = status_code
     mock.json.return_value = json_data
     mock.raise_for_status = Mock()
     return mock
@@ -41,9 +42,21 @@ def test_fetch_with_params(mock_get):
 def test_fetch_by_url(mock_get):
     url = "https://swapi.dev/api/people/1/"
     expected = {"name": "Luke"}
-    mock_get.return_value = make_response(expected)
+
+    mock_get.return_value = make_response(expected, 200)
 
     resp = SwapiService.fetch_by_url(url)
 
     mock_get.assert_called_with(url)
     assert resp == expected
+
+
+@patch("app.services.swapi_service.requests.get")
+def test_fetch_by_url_returns_none_on_error(mock_get):
+    url = "https://swapi.dev/api/people/1/"
+
+    mock_get.return_value = make_response({}, 404)
+
+    resp = SwapiService.fetch_by_url(url)
+
+    assert resp is None

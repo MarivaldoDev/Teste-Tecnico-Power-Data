@@ -14,5 +14,5 @@ def client():
 @pytest.fixture
 def auth_headers():
     return {
-        "API-Key": API_KEY
+        "X-API-Key": API_KEY
     }

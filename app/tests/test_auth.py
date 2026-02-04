@@ -6,7 +6,7 @@ def test_request_without_api_key(client):
 def test_request_with_invalid_api_key(client):
     response = client.get(
         "/people/",
-        headers={"API-Key": "invalid-key"}
+        headers={"X-API-Key": "invalid-key"}
     )
     assert response.status_code == 401
 

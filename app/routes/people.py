@@ -1,15 +1,18 @@
 from fastapi import APIRouter, Query, HTTPException, Depends
 from app.services.swapi_service import SwapiService
 from app.core.security import verify_api_key
+from app.schemas.people import PeopleResponse
+from app.core.logging import logger
 
 router = APIRouter(dependencies=[Depends(verify_api_key)])
 
 
-@router.get("/")
+@router.get("/", response_model=PeopleResponse)
 def get_people(
     name: str | None = Query(None),
     gender: str | None = Query(None)
 ):
+    logger.info("GET /people called")
     people = SwapiService.fetch_all("people")
 
     if name:
@@ -35,6 +38,8 @@ def get_person_films(
     person_id: int,
     sort: str | None = Query(default=None, description="Campo para ordenação")
 ):
+    
+    logger.info(f"Obtendo filmes para person_id={person_id}")
     person = SwapiService.fetch_by_url(
         f"https://swapi.dev/api/people/{person_id}/"
     )

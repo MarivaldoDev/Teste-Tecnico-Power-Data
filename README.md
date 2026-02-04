@@ -1,167 +1,144 @@
-# Teste Técnico Power Data - Star Wars API
+# Star Wars API – Teste Técnico Power Data
 
-## 📋 Sobre o Projeto
+API REST desenvolvida como parte de um teste técnico, utilizando **FastAPI**, com integração à **SWAPI (Star Wars API)**.  
+O objetivo do projeto é expor endpoints que permitem consultar e correlacionar dados do universo Star Wars, aplicando boas práticas de backend, testes automatizados e conceitos de arquitetura em nuvem.
 
-Este projeto é uma **API RESTful** desenvolvida em Python utilizando FastAPI que atua como um wrapper da [SWAPI (Star Wars API)](https://swapi.dev). A aplicação fornece endpoints organizados para consultar informações sobre o universo Star Wars, incluindo personagens, filmes, planetas e naves espaciais.
-
-### 🎯 Propósito
-
-Criado como teste técnico para a Power Data, este projeto demonstra:
-- Desenvolvimento de APIs REST com FastAPI
-- Integração com APIs externas
-- Organização de código em rotas e serviços
-- Boas práticas de desenvolvimento Python
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Python 3.13+**
-- **FastAPI 0.128.0** - Framework web moderno e rápido para construção de APIs
-- **Uvicorn 0.40.0** - Servidor ASGI para executar a aplicação
-- **Requests 2.32.5** - Biblioteca HTTP para chamadas à API externa
-- **Pydantic** - Validação de dados (via FastAPI)
+- Python 3.11
+- FastAPI
+- Requests
+- Pydantic
+- Pytest
+- Coverage
+- Docker
+
+
 
 ## 📁 Estrutura do Projeto
 
-```
-Teste-Tecnico-Power-Data/
-├── app/
-│   ├── main.py                 # Configuração principal da aplicação FastAPI
-│   ├── routes/                 # Definição dos endpoints da API
-│   │   ├── people.py          # Rotas relacionadas a personagens
-│   │   ├── films.py           # Rotas relacionadas a filmes
-│   │   ├── planets.py         # Rotas relacionadas a planetas
-│   │   └── starships.py       # Rotas relacionadas a naves espaciais
-│   └── services/
-│       └── swapi_service.py   # Serviço para chamadas à SWAPI
-├── pyproject.toml              # Metadados e dependências do projeto
-├── requirements.txt            # Pacotes instalados
-└── README.md                   # Documentação do projeto
-```
 
-## 🔧 Instalação e Configuração
-
-### Pré-requisitos
-
-- Python 3.13 ou superior
-- pip ou uv (gerenciador de pacotes)
-
-### Instalação
-
-1. Clone o repositório:
 ```bash
-git clone https://github.com/MarivaldoDev/Teste-Tecnico-Power-Data.git
-cd Teste-Tecnico-Power-Data
+app/
+├── core/
+│ ├── logging.py # Configuração centralizada de logs
+│ └── security.py # Autenticação via API Key
+├── routes/ # Rotas da aplicação
+├── services/ # Integração com a SWAPI
+├── schemas/ # Schemas Pydantic (contratos de resposta)
+├── main.py # Inicialização da aplicação
+tests/
+├── test_routes.py
+├── test_services.py
+├── test_security.py
+Dockerfile
+requirements.txt
+.env.example
 ```
 
-2. Instale as dependências:
+## Autenticação
+
+Defina a variável de ambiente `API_KEY` no arquivo `.env`.
+
+Exemplo:
+
+API_KEY="powerofdata-key"
+
+Em seguida, envie o header:
+
+X-API-Key: powerofdata-key
+
+
+Essa abordagem garante separação entre código e dados sensíveis, sendo adequada tanto para ambientes locais quanto cloud.
+
+
+## Pydantic
+
+O **Pydantic** foi utilizado de forma **pontual e estratégica**, principalmente para:
+
+- Definir contratos de resposta
+- Garantir validação automática dos dados
+- Melhorar a documentação gerada pelo Swagger
+
+O objetivo foi demonstrar domínio da ferramenta sem acoplar a aplicação à estrutura completa da API externa (SWAPI).
+
+
+## Logs
+
+O projeto possui **logging centralizado**, aplicado principalmente:
+
+- Nas chamadas à SWAPI
+- Em pontos críticos de execução das rotas
+
+Os logs são compatíveis com ambientes cloud (como GCP), sendo automaticamente capturados por ferramentas como **Cloud Logging**.
+
+
+## Testes Automatizados
+
+Os testes foram desenvolvidos utilizando **Pytest**, cobrindo:
+
+- Rotas da API
+- Autenticação por API Key
+- Serviços de integração com a SWAPI
+- Cenários de erro e respostas inválidas
+
+### Executar os testes
+
 ```bash
-pip install -r requirements.txt
+pytest
 ```
 
-Ou usando uv:
+### Gerar relatório de cobertura
 ```bash
-uv sync
+coverage run -m pytest
+coverage report
+coverage html
 ```
 
-3. Execute a aplicação:
+## Docker
+A aplicação pode ser executada em ambiente containerizado.
+
+### Build da imagem
 ```bash
-uvicorn app.main:app --reload
+docker build -t starwars-api .
 ```
 
-A API estará disponível em: `http://localhost:8000`
-
-## 📚 Documentação da API
-
-### Documentação Interativa
-
-Após iniciar a aplicação, acesse:
-- **Swagger UI**: `http://localhost:8000/docs`
-- **ReDoc**: `http://localhost:8000/redoc`
-
-### Endpoints Disponíveis
-
-#### 🏠 Health Check
-- `GET /` - Verifica o status da API
-
-#### 👥 People (Personagens)
-- `GET /people` - Lista todos os personagens
-  - Query params: `name`, `gender`
-- `GET /people/{id}/films` - Retorna os filmes em que o personagem apareceu
-- `GET /people/{id}/planet` - Retorna o planeta natal do personagem
-- `GET /people/{id}/starships` - Retorna as naves pilotadas pelo personagem
-
-#### 🎬 Films (Filmes)
-- `GET /films` - Lista todos os filmes
-  - Query params: `title`, `director`
-- `GET /films/{id}/characters` - Retorna todos os personagens de um filme
-
-#### 🌍 Planets (Planetas)
-- `GET /planets/{id}/residents` - Retorna os residentes de um planeta
-
-#### 🚀 Starships (Naves Espaciais)
-- `GET /starships/{id}/pilots` - Retorna os pilotos de uma nave espacial
-
-## 💡 Exemplos de Uso
-
-### Listar todos os personagens
+### Executar o container
 ```bash
-curl http://localhost:8000/people
+docker run -p 8000:8000 --env-file .env starwars-api
 ```
 
-### Buscar personagens por nome
+Acesse a documentação interativa:
 ```bash
-curl http://localhost:8000/people?name=Luke
+http://localhost:8000/docs
 ```
 
-### Obter filmes de um personagem específico
+## ☁️ Deploy na Google Cloud Platform (GCP)
+
+A aplicação foi projetada para ser executada em ambiente serverless na GCP.
+
+### Arquitetura sugerida
+
+- Cloud Functions: execução da API FastAPI
+- API Gateway: exposição e gerenciamento dos endpoints
+- Cloud Logging: observabilidade e monitoramento
+- Variáveis de ambiente: gerenciamento seguro da API Key
+
+### Fluxo da aplicação
 ```bash
-curl http://localhost:8000/people/1/films
+Cliente → API Gateway → Cloud Function → SWAPI
 ```
+O projeto está preparado para esse cenário sem necessidade de alterações significativas no código.
 
-### Listar filmes por diretor
-```bash
-curl http://localhost:8000/films?director=George%20Lucas
-```
 
-## 🌐 Fonte de Dados
+## Observações Finais
 
-Todos os dados são obtidos da **SWAPI (Star Wars API)** - uma API pública e gratuita que contém informações abrangentes sobre o universo Star Wars.
+O foco do projeto é demonstrar boas práticas de backend, organização de código, testes automatizados e visão de arquitetura em nuvem.
 
-- URL Base: `https://swapi.dev/api`
-- Documentação: [swapi.dev](https://swapi.dev)
+Foram evitadas soluções complexas ou overengineering, mantendo o escopo alinhado ao desafio proposto.
 
-## 🎨 Funcionalidades
-
-1. **Listagem com Filtros**: Filtre personagens por nome/gênero e filmes por título/diretor
-2. **Navegação Relacional**: Acesse facilmente informações relacionadas (ex: filmes de um personagem, personagens de um filme)
-3. **Informações Detalhadas**: Consulte planetas natais, naves pilotadas, residentes de planetas, etc.
-4. **Documentação Automática**: Swagger UI e ReDoc gerados automaticamente pelo FastAPI
-
-## 📝 Status do Projeto
-
-✅ API funcional com endpoints principais implementados  
-✅ Integração com SWAPI completa  
-✅ Documentação automática disponível  
-🔄 Em desenvolvimento contínuo
 
 ## 👨‍💻 Autor
 
-Marivaldo
-
-## 📄 Licença
-
-Este projeto foi desenvolvido como teste técnico para a Power Data.
- 
-## ☁️ Deploy no GCP (Cloud Run)
-
-Recomendo usar **Cloud Run** para este projeto (suporta ASGI/FastAPI sem adaptação). Para facilitar o deploy incluí um `Dockerfile` e o script `deploy.sh`.
-
-Passos rápidos:
-
-```bash
-# Edite a variável PROJECT abaixo ou exporte antes de rodar:
-export PROJECT=your-gcp-project-id
-./deploy.sh
-```
-
-O script faz `gcloud builds submit` e deploya no Cloud Run. Se preferir Cloud Functions + API Gateway, eu posso adicionar um wrapper (Functions Framework) e o OpenAPI para o Gateway.
+Desenvolvido por Marivaldo Pedro
