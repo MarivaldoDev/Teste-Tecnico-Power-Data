@@ -199,4 +199,4 @@ Foram evitadas soluções complexas ou overengineering, mantendo o escopo alinha
 
 ## 👨‍💻 Autor
 
-Desenvolvido por <a href="marivaldo.pedro.dev@outlook.com">Marivaldo Pedro</a>
+Desenvolvido por Marivaldo Pedro
